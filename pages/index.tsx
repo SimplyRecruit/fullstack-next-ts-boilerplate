@@ -1,9 +1,9 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import { get } from './api/person/[index]'
-import { Person } from '../types/person'
+import Person from 'models/Person'
 
-export default function Home({ person }: { person: Person }) {
+export default function Home() {
+  const person = new Person("deneme", "deneme")
   return (
     <>
       <Head>
@@ -21,9 +21,3 @@ export default function Home({ person }: { person: Person }) {
     </>
   )
 }
-
-export async function getServerSideProps() {
-  const person: Person = await get(0)
-  return { props: { person } }
-}
-

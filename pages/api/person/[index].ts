@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { Person } from 'types/person'
+import { Person } from 'models/Person'
 import { sendBadRequest } from 'util/responses';
 import { paramToInt } from "util/transformers";
 
