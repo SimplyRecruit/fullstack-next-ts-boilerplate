@@ -16,7 +16,6 @@ export class SampleController {
     @Post("/")
     post(@Body() person: Person) {
         person = new Person("falan", "")
-        throw "deneme"
         return person;
     }
 
