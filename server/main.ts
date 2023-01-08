@@ -1,14 +1,36 @@
-import express, { Request, Response } from "express";
-import next from "next";
+import express, { Request, Response } from "express"
+import next from "next"
+import { DataSource } from "typeorm"
+import 'reflect-metadata' /* this shim is required */
+import { useExpressServer } from 'routing-controllers'
+import { SampleController } from './controllers/sample'
 
-import 'reflect-metadata';/* this shim is required */
-import { useExpressServer } from 'routing-controllers';
-import { SampleController } from './controllers/sample';
-
-const dev = process.env.NODE_ENV !== "production";
+const dev = process.env.NODE_ENV !== "production"
 const app = next({ dev });
 const handle = app.getRequestHandler();
 const port = process.env.PORT || 3000;
+
+// Resolving environment variables
+import "dotenv/config"
+
+// Importing entities
+import PersonEntity from "./entities/PersonEntity"
+
+// Connecting to DB
+const dataSource = new DataSource({
+    type: "postgres",
+    url: process.env.DB_CSTR,
+    entities: [PersonEntity],
+    logging: true,
+    synchronize: true
+})
+
+dataSource.initialize().then(() => {
+    console.info("Connected to DB")
+}).catch((error: unknown) => {
+    console.error("Error connecting to DB:")
+    console.error(error)
+});
 
 (async () => {
     try {

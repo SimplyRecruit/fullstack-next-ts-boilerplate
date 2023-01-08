@@ -1,10 +1,12 @@
 import Person from '../../models/Person';
+import PersonEntity from "../entities/PersonEntity"
 import { Param, Body, Get, Post, Put, Delete, JsonController, QueryParam, Authorized } from 'routing-controllers';
 
 @JsonController("/sample")
 export class SampleController {
     @Get('/')
     getAll() {
+        // const newPerson = PersonEntity.create([{},{}])
         return 'This action returns all items';
     }
 
@@ -15,7 +17,6 @@ export class SampleController {
 
     @Post("/")
     post(@Body() person: Person) {
-        person = new Person("falan", "")
         return person;
     }
 
