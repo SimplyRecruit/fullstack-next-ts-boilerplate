@@ -6,27 +6,35 @@ import { Param, Body, Get, Post, Put, Delete, JsonController, QueryParam, Author
 export class SampleController {
     @Get('/')
     getAll() {
-        // const newPerson = PersonEntity.create([{},{}])
-        return 'This action returns all items';
+        return PersonEntity.find();
     }
 
     @Get('/:id')
-    getOne(@Param('id') id: number) {
-        return 'This action returns item #' + id;
+    async getOne(@Param('id') id: number) {
+        return await PersonEntity.findOneBy({ id }) ?? "Bulunamadı";
     }
 
     @Post("/")
     post(@Body() person: Person) {
-        return person;
+        PersonEntity.create({ ...person }).save()
+        return "Done";
     }
 
     @Put('/:id')
-    put(@Param('id') id: number, @Body() user: any) {
-        return 'Updating a user...';
+    async put(@Param('id') id: number, @Body() person: Person) {
+        const currentPerson = await PersonEntity.findOneBy({ id })
+        if (currentPerson == null) return "Not Found"
+        currentPerson.name = person.name
+        currentPerson.surname = person.surname
+        await currentPerson.save()
+        return 'Done';
     }
 
     @Delete('/:id')
-    remove(@Param('id') id: number) {
-        return 'Removing user...';
+    async remove(@Param('id') id: number) {
+        const currentPerson = await PersonEntity.findOneBy({ id })
+        if (currentPerson == null) return "Not Found"
+        await currentPerson.remove()
+        return "Removed";
     }
 }
