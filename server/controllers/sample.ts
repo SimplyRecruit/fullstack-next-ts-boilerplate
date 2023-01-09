@@ -1,7 +1,7 @@
 import Person from '../../models/Person';
-import PersonEntity from "../entities/PersonEntity"
+import {PersonEntity} from "../entities/PersonEntity"
 import { Param, Body, Get, Post, Put, Delete, JsonController, QueryParam, Authorized } from 'routing-controllers';
-import HatEntity from '../entities/HatEntity';
+import {HatEntity} from '../entities/HatEntity';
 
 @JsonController("/sample")
 export class SampleController {
@@ -18,6 +18,7 @@ export class SampleController {
     @Post("/")
     async post(@Body() person: Person) {
         const hat = HatEntity.create({ color: "red" })
+        await hat.save()
         await PersonEntity.create({ ...person, hat }).save()
         return "Done";
     }

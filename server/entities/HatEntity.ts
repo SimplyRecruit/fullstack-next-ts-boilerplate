@@ -1,14 +1,14 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, JoinColumn, OneToOne } from "typeorm"
-import PersonEntity from "./PersonEntity"
+import {PersonEntity} from "./PersonEntity"
 
-@Entity()
-export default class extends BaseEntity {
+@Entity("hat")
+export class HatEntity extends BaseEntity {
     @PrimaryGeneratedColumn()
     id!: number
 
     @Column()
     color!: string
 
-    @OneToOne(() => PersonEntity, (person) => person.hat)
+    @OneToOne(() => PersonEntity)
     person!: PersonEntity
 }

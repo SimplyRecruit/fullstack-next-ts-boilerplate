@@ -15,8 +15,8 @@ const port = process.env.PORT || 3000;
 import "dotenv/config"
 
 // Importing entities
-import PersonEntity from "./entities/PersonEntity"
-import HatEntity from "./entities/HatEntity"
+import { PersonEntity } from "./entities/PersonEntity"
+import { HatEntity } from "./entities/HatEntity"
 
 // Connecting to DB
 const dataSource = new DataSource({
