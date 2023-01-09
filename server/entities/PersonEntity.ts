@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne, JoinColumn, OneToOne } from "typeorm"
+import HatEntity from "./HatEntity"
 
 @Entity()
 export default class extends BaseEntity {
@@ -10,4 +11,8 @@ export default class extends BaseEntity {
 
     @Column()
     surname!: string
+
+    @OneToOne(() => HatEntity, (hat) => hat.person)
+    @JoinColumn()
+    hat!: HatEntity
 }

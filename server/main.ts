@@ -1,7 +1,8 @@
+import 'reflect-metadata' /* this shim is required */
 import express, { Request, Response } from "express"
 import next from "next"
-import { DataSource } from "typeorm"
-import 'reflect-metadata' /* this shim is required */
+import { DataSource, DefaultNamingStrategy } from "typeorm"
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { useExpressServer } from 'routing-controllers'
 import { SampleController } from './controllers/sample'
 
@@ -15,14 +16,16 @@ import "dotenv/config"
 
 // Importing entities
 import PersonEntity from "./entities/PersonEntity"
+import HatEntity from "./entities/HatEntity"
 
 // Connecting to DB
 const dataSource = new DataSource({
     type: "postgres",
     url: process.env.DB_CSTR,
-    entities: [PersonEntity],
+    entities: [PersonEntity, HatEntity],
     logging: true,
-    synchronize: true
+    synchronize: true,
+    namingStrategy: new SnakeNamingStrategy(),
 })
 
 dataSource.initialize().then(() => {

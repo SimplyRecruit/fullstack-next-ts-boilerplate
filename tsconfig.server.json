@@ -6,6 +6,9 @@
         "outDir": "dist",
         "isolatedModules": false,
         "noEmit": false,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "lib": ["ES6"]
     },
     "include": [
         "server/**/*.ts"
