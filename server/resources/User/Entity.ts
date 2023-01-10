@@ -5,10 +5,10 @@ import EntityBase from "../../EntityBase"
 @Entity("user")
 export class UserEntity extends EntityBase {
 
-    @Column()
+    @Column({ nullable: true })
     name: string
 
-    @Column()
+    @Column({ unique: true })
     email: string
 
     @Column()
