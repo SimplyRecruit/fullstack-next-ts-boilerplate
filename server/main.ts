@@ -4,8 +4,8 @@ import next from "next"
 import { DataSource } from "typeorm"
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { useExpressServer } from 'routing-controllers'
-import { SampleController } from './controllers/sample'
 import { join } from "path"
+
 
 const dev = process.env.NODE_ENV !== "production"
 const app = next({ dev });
@@ -15,11 +15,15 @@ const port = process.env.PORT || 3000;
 // Resolving environment variables
 import "dotenv/config"
 
+// Controllers
+import { SampleController } from './controllers/sample'
+import UserController from './resources/User/Controller';
+
 // Connecting to DB
 const dataSource = new DataSource({
     type: "postgres",
     url: process.env.DB_CSTR,
-    entities: [join(__dirname, './entities/**/*.ts')], // [PersonEntity, HatEntity],
+    entities: [join(__dirname, './resources/**/*Entity.ts')], // [PersonEntity, HatEntity],
     logging: true,
     synchronize: true,
     namingStrategy: new SnakeNamingStrategy(),
@@ -38,7 +42,9 @@ dataSource.initialize().then(() => {
         await app.prepare();
         const server = express();
         useExpressServer(server, {
-            controllers: [SampleController], // we specify controllers we want to use
+            authorizationChecker: () => { return true },
+            currentUserChecker: () => { },
+            controllers: [SampleController, UserController], // we specify controllers we want to use
             routePrefix: '/api',
             validation: { dismissDefaultMessages: true },
             cors: true
