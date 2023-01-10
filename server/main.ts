@@ -1,10 +1,11 @@
 import 'reflect-metadata' /* this shim is required */
 import express, { Request, Response } from "express"
 import next from "next"
-import { DataSource, DefaultNamingStrategy } from "typeorm"
+import { DataSource } from "typeorm"
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { useExpressServer } from 'routing-controllers'
 import { SampleController } from './controllers/sample'
+import { join } from "path"
 
 const dev = process.env.NODE_ENV !== "production"
 const app = next({ dev });
@@ -14,15 +15,11 @@ const port = process.env.PORT || 3000;
 // Resolving environment variables
 import "dotenv/config"
 
-// Importing entities
-import { PersonEntity } from "./entities/PersonEntity"
-import { HatEntity } from "./entities/HatEntity"
-
 // Connecting to DB
 const dataSource = new DataSource({
     type: "postgres",
     url: process.env.DB_CSTR,
-    entities: [PersonEntity, HatEntity],
+    entities: [join(__dirname, './entities/**/*.ts')], // [PersonEntity, HatEntity],
     logging: true,
     synchronize: true,
     namingStrategy: new SnakeNamingStrategy(),
