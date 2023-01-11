@@ -45,13 +45,15 @@ dataSource.initialize().then(() => {
         useExpressServer(server, {
             authorizationChecker: checkIfAuthorized,
             currentUserChecker: checkCurrentUser,
-            controllers: [SampleController, UserController], // we specify controllers we want to use
+            controllers: [SampleController, UserController],
             routePrefix: '/api',
             validation: { validationError: { target: false, value: false } },
             cors: true,
             defaults: {
                 paramOptions: { required: true }
-            }
+            },
+            middlewares: [], //[CustomErrorHandler],
+            defaultErrorHandler: true //false
         });
 
         // Send 404 for not found APIs
