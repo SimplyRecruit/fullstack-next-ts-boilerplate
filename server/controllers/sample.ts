@@ -1,7 +1,7 @@
 import Person from '../../models/Person';
-import {PersonEntity} from "../entities/PersonEntity"
+import { PersonEntity } from "../resources/Person/Entity"
 import { Param, Body, Get, Post, Put, Delete, JsonController, QueryParam, Authorized } from 'routing-controllers';
-import {HatEntity} from '../entities/HatEntity';
+import { HatEntity } from '../resources/Hat/Entity';
 
 @JsonController("/sample")
 export class SampleController {
