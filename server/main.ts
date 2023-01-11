@@ -5,6 +5,7 @@ import { DataSource } from "typeorm"
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { useExpressServer } from 'routing-controllers'
 import { join } from "path"
+import { checkCurrentUser, checkIfAuthorized } from './resources/User/AuthService';
 
 
 const dev = process.env.NODE_ENV !== "production"
@@ -42,12 +43,15 @@ dataSource.initialize().then(() => {
         await app.prepare();
         const server = express();
         useExpressServer(server, {
-            authorizationChecker: () => { return true },
-            currentUserChecker: () => { },
+            authorizationChecker: checkIfAuthorized,
+            currentUserChecker: checkCurrentUser,
             controllers: [SampleController, UserController], // we specify controllers we want to use
             routePrefix: '/api',
-            validation: { dismissDefaultMessages: true },
-            cors: true
+            validation: { validationError: { target: false, value: false } },
+            cors: true,
+            defaults: {
+                paramOptions: { required: true }
+            }
         });
 
         // Send 404 for not found APIs
