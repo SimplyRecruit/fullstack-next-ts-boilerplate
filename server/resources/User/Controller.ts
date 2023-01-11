@@ -1,9 +1,11 @@
 import LoginReqBody from '../../../models/LoginReqBody';
-import { Param, Body, Get, Post, Put, Delete, JsonController, QueryParam, Authorized, BadRequestError, UnauthorizedError, HttpError, InternalServerError, HeaderParam } from 'routing-controllers';
+import { Body, Get, Post, JsonController, Authorized, CurrentUser, BadRequestError, UnauthorizedError, HttpError, InternalServerError } from 'routing-controllers';
 import { UserEntity } from './Entity';
 import Bcrypt from "bcrypt"
 import Jwt from "jsonwebtoken"
 import RegisterReqBody from '../../../models/RegisterReqBody';
+import User from '../../../models/User';
+import UserRole from '../../../models/UserRole';
 
 @JsonController("/user")
 export default class {
@@ -39,9 +41,7 @@ export default class {
     }
 
     @Get('/me')
-    async me(@HeaderParam("authorization") bearerToken: string) {
-        const token = this.tokenRegex.exec(bearerToken)?.[1]
-        if (token == null) throw new BadRequestError()
-        const payload = Jwt.verify(token, process.env['JWT_SECRET']!)
+    async me(@CurrentUser() user: User) {
+        return user
     }
 }
