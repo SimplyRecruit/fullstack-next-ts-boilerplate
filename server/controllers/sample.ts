@@ -6,8 +6,8 @@ import { HatEntity } from '../resources/Hat/Entity';
 @JsonController("/sample")
 export class SampleController {
     @Get('/')
-    getAll() {
-        return PersonEntity.find();
+    async getAll() {
+        return await PersonEntity.find();
     }
 
     @Get('/:id')

@@ -1,8 +1,12 @@
 {
-    "watch": [
-        "server/**/*.ts"
+    "ignore": [
+        ".git",
+        "node_modules",
+        "dist"
     ],
-    "execMap": {
-        "ts": "ts-node --typeCheck --compilerOptions \"{\\\"module\\\":\\\"commonjs\\\"}\""
-    }
+    "watch": [
+        "./server"
+    ],
+    "exec": "ts-node --project tsconfig.server.json ./server/main.ts",
+    "ext": "ts"
 }
