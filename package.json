@@ -6,7 +6,8 @@
     "dev": "nodemon",
     "build": "next build && tsc --project tsconfig.server.json",
     "start": "cross-env NODE_ENV=production node dist/index.js",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deneme": "ts-node --compilerOptions \"{\\\"module\\\":\\\"commonjs\\\"}\" deneme.ts"
   },
   "dependencies": {
     "@next/font": "13.1.1",
