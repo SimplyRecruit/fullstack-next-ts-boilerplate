@@ -3,13 +3,28 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "nodemon",
-    "build": "next build && tsc --project tsconfig.server.json",
-    "start": "cross-env NODE_ENV=production node dist/index.js",
-    "lint": "next lint"
+    "dev": "nodemon --config nodemon.json",
+    "debug": "nodemon --config nodemon-debug.json",
+    "build": "next build && tsc --project tsconfig.server.json && cp tsconfig.json ./dist/tsconfig.prod.json",
+    "start": "cross-env NODE_ENV=production TS_NODE_PROJECT=dist/tsconfig.prod.json node -r tsconfig-paths/register ./dist/server/main.js",
+    "lint": "next lint",
+    "prepare": "husky install",
+    "generate-locale-schemas": "node -e \"require('./generate-locale-schemas.js').generateSchemas()\"",
+    "create-locale-namespace": "node -e \"require('./generate-locale-schemas.js').createNamespace()\""
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint"
+    ],
+    "*.tsx": [
+      "eslint"
+    ]
   },
   "dependencies": {
+    "@ant-design/icons": "^5.0.1",
+    "@ant-design/plots": "^1.2.5",
     "@next/font": "13.1.1",
+    "@sendgrid/mail": "^7.7.0",
     "@types/node": "18.11.18",
     "@types/react": "18.0.26",
     "@types/react-dom": "18.0.10",
@@ -23,17 +38,22 @@
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "i18next": "^22.4.9",
     "jsonwebtoken": "^9.0.0",
     "multer": "^1.4.5-lts.1",
     "next": "13.1.1",
+    "next-i18next": "^13.1.5",
     "pg": "^8.8.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-i18next": "^12.1.5",
+    "react-icons": "^4.7.1",
     "reflect-metadata": "^0.1.13",
-    "routing-controllers": "^0.10.0",
+    "routing-controllers": "^0.10.2",
     "typeorm": "^0.3.11",
     "typeorm-naming-strategies": "^4.1.0",
-    "typescript": "4.9.4"
+    "typescript": "4.9.4",
+    "universal-cookie": "^4.0.4"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
@@ -41,7 +61,18 @@
     "@types/express": "^4.17.15",
     "@types/jsonwebtoken": "^9.0.0",
     "@types/multer": "^1.4.7",
+    "@typescript-eslint/eslint-plugin": "^5.50.0",
+    "eslint": "8.33.0",
+    "eslint-config-next": "13.1.6",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "handlebars": "^4.7.7",
+    "husky": "^8.0.0",
+    "json-schema-generator": "^2.0.6",
+    "lint-staged": "^13.1.1",
     "nodemon": "^2.0.20",
-    "ts-node": "^10.9.1"
+    "prettier": "^2.8.3",
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.1.2"
   }
 }

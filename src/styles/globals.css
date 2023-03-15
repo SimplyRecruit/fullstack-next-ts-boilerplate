@@ -1,0 +1,39 @@
+body {
+  margin: 0;
+  overflow-y: hidden;
+}
+
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.center-column {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.elevation {
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+/* antd overrides */
+
+.ant-menu-title-content {
+  margin-left: 8px !important;
+}
+
+.ant-drawer-content-wrapper {
+  border-radius: 16px;
+  margin: 16px;
+}
+
+/* 
+ To ensure table has overflow-y if only necessary
+.ant-table-body {
+  overflow-y: auto !important;
+}*/

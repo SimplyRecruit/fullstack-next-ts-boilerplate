@@ -1,0 +1,7 @@
+{
+    "$schema": "../schemas/login.json",
+    "redirecting": "Redirecting...",
+    "invalidCredentials": "Invalid Credentials",
+    "title": "Log In",
+    "forgotPassword": "Forgot password?"
+}

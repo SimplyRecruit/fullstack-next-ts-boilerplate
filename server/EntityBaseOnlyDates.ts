@@ -2,14 +2,10 @@ import {
   BaseEntity,
   CreateDateColumn,
   DeleteDateColumn,
-  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
 
-export default class EntityBase extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid')
-  id: string
-
+export default class EntityBaseOnlyDates extends BaseEntity {
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date
 
