@@ -1,9 +1,7 @@
 import Bcrypt from 'bcrypt'
-import { randomUUID } from 'crypto'
 import type { Request } from 'express'
 import Jwt from 'jsonwebtoken'
 import {
-  ResourceCreateBody,
   type Language,
   LoginReqBody,
   RegisterOrganizationReqBody,
@@ -11,6 +9,7 @@ import {
   UserRole,
   UserStatus,
   ResetPasswordReqBody,
+  UserCreateBody,
 } from 'models'
 import {
   Authorized,
@@ -114,7 +113,7 @@ export default class UserController {
   @Authorized(UserRole.ADMIN)
   async invite(
     @Body()
-    { email, name, ...rest }: ResourceCreateBody,
+    { email, name, ...rest }: UserCreateBody,
     @CurrentUser() currentUser: UserEntity,
     @Req() req: Request,
     @HeaderParam('Accept-Language') language: Language
